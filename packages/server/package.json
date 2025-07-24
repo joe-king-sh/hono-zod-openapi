@@ -1,0 +1,28 @@
+{
+	"name": "server",
+	"version": "1.0.0",
+	"description": "Hono server with Zod OpenAPI",
+	"main": "dist/index.js",
+	"scripts": {
+		"dev": "tsx watch src/index.ts",
+		"build": "tsc",
+		"start": "node dist/index.js",
+		"lint": "biome lint src",
+		"lint:fix": "biome lint --write src",
+		"format": "biome format --write src",
+		"check": "biome check src",
+		"check:fix": "biome check --write src"
+	},
+	"dependencies": {
+		"@hono/node-server": "^1.17.1",
+		"@hono/zod-openapi": "^0.18.2",
+		"hono": "^4.6.10",
+		"shared": "workspace:*",
+		"zod": "^3.24.1"
+	},
+	"devDependencies": {
+		"@types/node": "^22.10.0",
+		"tsx": "^4.19.2",
+		"typescript": "^5.7.0"
+	}
+}
