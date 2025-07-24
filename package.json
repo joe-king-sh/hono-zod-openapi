@@ -1,0 +1,28 @@
+{
+	"name": "hono-zod-openapi",
+	"version": "1.0.0",
+	"description": "Hono + Zod + OpenAPI validation project",
+	"main": "index.js",
+	"scripts": {
+		"dev": "pnpm --filter server dev",
+		"build": "pnpm -r build",
+		"test": "pnpm -r test",
+		"lint": "biome lint .",
+		"lint:fix": "biome lint --write .",
+		"format": "biome format --write .",
+		"check": "biome check .",
+		"check:fix": "biome check --write ."
+	},
+	"keywords": [
+		"hono",
+		"zod",
+		"openapi"
+	],
+	"author": "",
+	"license": "MIT",
+	"devDependencies": {
+		"@biomejs/biome": "^2.1.0",
+		"typescript": "^5.7.0",
+		"@types/node": "^22.10.0"
+	}
+}
