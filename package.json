@@ -22,7 +22,7 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@biomejs/biome": "^2.1.0",
-		"typescript": "^5.7.0",
-		"@types/node": "^22.10.0"
+		"@types/node": "^22.10.0",
+		"typescript": "^5.7.0"
 	}
 }

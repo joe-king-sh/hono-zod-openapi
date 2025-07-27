@@ -1,31 +1,10 @@
 import { serve } from "@hono/node-server";
-import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { OpenAPIHono } from "@hono/zod-openapi";
 import { todosRouter } from "./todos";
+import { swaggerUI } from "@hono/swagger-ui";
+import { Scalar } from "@scalar/hono-api-reference";
 
 const app = new OpenAPIHono();
-
-const route = createRoute({
-	method: "get",
-	path: "/hello",
-	responses: {
-		200: {
-			content: {
-				"application/json": {
-					schema: z.object({
-						message: z.string(),
-					}),
-				},
-			},
-			description: "Hello message",
-		},
-	},
-});
-
-app.openapi(route, (c) => {
-	return c.json({
-		message: "Hello World!",
-	});
-});
 
 app.route("/todos", todosRouter);
 
@@ -38,6 +17,12 @@ app.doc("/doc", {
 			"A simple TODO API demonstrating Hono with Zod OpenAPI integration",
 	},
 });
+
+// Swagger UI
+app.get("/ui", swaggerUI({ url: "/doc" }));
+
+// Scalar
+app.get("/scalar", Scalar({ url: "/doc" }));
 
 const port = 3000;
 

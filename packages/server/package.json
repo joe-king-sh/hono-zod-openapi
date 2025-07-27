@@ -15,7 +15,9 @@
 	},
 	"dependencies": {
 		"@hono/node-server": "^1.17.1",
+		"@hono/swagger-ui": "^0.5.2",
 		"@hono/zod-openapi": "^0.18.2",
+		"@scalar/hono-api-reference": "^0.9.12",
 		"hono": "^4.6.10",
 		"shared": "workspace:*",
 		"zod": "^3.24.1"

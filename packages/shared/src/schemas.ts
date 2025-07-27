@@ -1,11 +1,19 @@
-import { z } from "zod";
+import { z } from "@hono/zod-openapi";
 
 // Base Todo schema
 export const TodoSchema = z.object({
-	id: z.string(),
-	title: z.string().min(1, "Title is required"),
-	completed: z.boolean().default(false),
-	createdAt: z.string().datetime(),
+	id: z.string().openapi({
+		example: "10cb81aa-8807-46b8-809a-28aa7bede594",
+	}),
+	title: z.string().min(1, "タイトルは必須です").openapi({
+		example: "人参を買う",
+	}),
+	completed: z.boolean().default(false).openapi({
+		example: false,
+	}),
+	createdAt: z.string().datetime().openapi({
+		example: "2021-01-01T00:00:00.000Z",
+	}),
 });
 
 // GET /todos - Response
@@ -13,15 +21,21 @@ export const GetTodosResponseSchema = z.array(TodoSchema);
 
 // POST /todos - Request & Response
 export const PostTodosRequestSchema = z.object({
-	title: z.string().min(1, "Title is required"),
+	title: z.string().min(1, "Title is required").openapi({
+		example: "ジャガイモを買う",
+	}),
 });
 
 export const PostTodosResponseSchema = TodoSchema;
 
 // PUT /todos/:id - Request & Response
 export const PutTodosRequestSchema = z.object({
-	title: z.string().min(1, "Title is required").optional(),
-	completed: z.boolean().optional(),
+	title: z.string().min(1, "Title is required").optional().openapi({
+		example: "ジャガイモを買う",
+	}),
+	completed: z.boolean().optional().openapi({
+		example: true,
+	}),
 });
 
 export const PutTodosResponseSchema = TodoSchema;
