@@ -1,10 +1,10 @@
 import { serve } from "@hono/node-server";
-import { OpenAPIHono } from "@hono/zod-openapi";
-import { todosRouter } from "./todos";
 import { swaggerUI } from "@hono/swagger-ui";
+import { OpenAPIHono } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
+import { todosRouter } from "./todos";
 
-const app = new OpenAPIHono();
+export const app = new OpenAPIHono();
 
 app.route("/todos", todosRouter);
 
