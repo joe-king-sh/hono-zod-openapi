@@ -8,6 +8,10 @@ build/
 out/
 *.tsbuildinfo
 
+# Generated files
+packages/web/src/generated/*
+!packages/web/src/generated/.gitkeep
+
 # Environment variables
 .env
 .env.local

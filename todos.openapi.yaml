@@ -1,0 +1,227 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: TODO API with Hono + Zod OpenAPI
+  description: A simple TODO API demonstrating Hono with Zod OpenAPI integration
+
+components:
+  schemas: {}
+  parameters: {}
+
+paths:
+  /todos:
+    get:
+      responses:
+        '200':
+          description: List of todos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  anyOf:
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "10cb81aa-8807-46b8-809a-28aa7bede594"
+                        title:
+                          type: string
+                          minLength: 1
+                          example: "人参を買う"
+                        completed:
+                          type: boolean
+                          default: false
+                          example: false
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2021-01-01T00:00:00.000Z"
+                      required:
+                        - id
+                        - title
+                        - createdAt
+                    - type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "10cb81aa-8807-46b8-809a-28aa7bede594"
+                        title:
+                          type: string
+                          minLength: 1
+                          example: "人参を買う"
+                        completed:
+                          type: boolean
+                          default: false
+                          example: false
+                        createdAt:
+                          type: string
+                          format: date-time
+                          example: "2021-01-01T00:00:00.000Z"
+                        createdBy:
+                          type: string
+                          example: "10cb81aa-8807-46b8-809a-28aa7bede594"
+                      required:
+                        - id
+                        - title
+                        - createdAt
+                        - createdBy
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  minLength: 1
+                  example: "ジャガイモを買う"
+              required:
+                - title
+      responses:
+        '201':
+          description: Created todo
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "10cb81aa-8807-46b8-809a-28aa7bede594"
+                      title:
+                        type: string
+                        minLength: 1
+                        example: "人参を買う"
+                      completed:
+                        type: boolean
+                        default: false
+                        example: false
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2021-01-01T00:00:00.000Z"
+                    required:
+                      - id
+                      - title
+                      - createdAt
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "10cb81aa-8807-46b8-809a-28aa7bede594"
+                      title:
+                        type: string
+                        minLength: 1
+                        example: "人参を買う"
+                      completed:
+                        type: boolean
+                        default: false
+                        example: false
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2021-01-01T00:00:00.000Z"
+                      createdBy:
+                        type: string
+                        example: "10cb81aa-8807-46b8-809a-28aa7bede594"
+                    required:
+                      - id
+                      - title
+                      - createdAt
+                      - createdBy
+        '400':
+          description: Invalid request body
+
+  /todos/{id}:
+    put:
+      parameters:
+        - schema:
+            type: string
+          required: true
+          name: id
+          in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  minLength: 1
+                  example: "ジャガイモを買う"
+                completed:
+                  type: boolean
+                  example: true
+      responses:
+        '200':
+          description: Updated todo
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "10cb81aa-8807-46b8-809a-28aa7bede594"
+                      title:
+                        type: string
+                        minLength: 1
+                        example: "人参を買う"
+                      completed:
+                        type: boolean
+                        default: false
+                        example: false
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2021-01-01T00:00:00.000Z"
+                    required:
+                      - id
+                      - title
+                      - createdAt
+                  - type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "10cb81aa-8807-46b8-809a-28aa7bede594"
+                      title:
+                        type: string
+                        minLength: 1
+                        example: "人参を買う"
+                      completed:
+                        type: boolean
+                        default: false
+                        example: false
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: "2021-01-01T00:00:00.000Z"
+                      createdBy:
+                        type: string
+                        example: "10cb81aa-8807-46b8-809a-28aa7bede594"
+                    required:
+                      - id
+                      - title
+                      - createdAt
+                      - createdBy
+        '400':
+          description: Invalid request body
+        '404':
+          description: Todo not found
+    delete:
+      parameters:
+        - schema:
+            type: string
+          required: true
+          name: id
+          in: path
+      responses:
+        '204':
+          description: Todo deleted successfully
+        '404':
+          description: Todo not found
