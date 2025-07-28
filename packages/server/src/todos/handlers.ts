@@ -1,4 +1,9 @@
 import type { RouteHandler } from "@hono/zod-openapi";
+import {
+	GetTodosResponseSchema,
+	PostTodosResponseSchema,
+	PutTodosResponseSchema,
+} from "shared";
 import type {
 	createTodoRoute,
 	deleteTodoRoute,
@@ -9,7 +14,14 @@ import { todoStorage } from "./storage";
 
 export const getTodos: RouteHandler<typeof getTodosRoute> = (c) => {
 	const todos = todoStorage.getAll();
-	return c.json(todos, 200);
+
+	const result = GetTodosResponseSchema.safeParse(todos);
+	if (!result.success) {
+		console.error("Response validation error:", result.error);
+		throw new Error("レスポンスデータのバリデーションに失敗しました");
+	}
+
+	return c.json(result.data, 200);
 };
 
 export const createTodo: RouteHandler<typeof createTodoRoute> = (c) => {
@@ -23,7 +35,14 @@ export const createTodo: RouteHandler<typeof createTodoRoute> = (c) => {
 	};
 
 	const created = todoStorage.create(todo);
-	return c.json(created, 201);
+
+	const result = PostTodosResponseSchema.safeParse(created);
+	if (!result.success) {
+		console.error("Response validation error:", result.error);
+		throw new Error("レスポンスデータのバリデーションに失敗しました");
+	}
+
+	return c.json(result.data, 201);
 };
 
 export const updateTodo: RouteHandler<typeof updateTodoRoute> = (c) => {
@@ -36,7 +55,13 @@ export const updateTodo: RouteHandler<typeof updateTodoRoute> = (c) => {
 		return c.json({ error: "Todo not found" }, 404);
 	}
 
-	return c.json(updated, 200);
+	const result = PutTodosResponseSchema.safeParse(updated);
+	if (!result.success) {
+		console.error("Response validation error:", result.error);
+		throw new Error("レスポンスデータのバリデーションに失敗しました");
+	}
+
+	return c.json(result.data, 200);
 };
 
 export const deleteTodo: RouteHandler<typeof deleteTodoRoute> = (c) => {
